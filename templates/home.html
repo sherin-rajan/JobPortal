@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}JobsPortal | Home{% endblock %}
+
+{% block extra_css %}
+    <!-- Linked to styles.css for general page styling -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="hero-content">
+        <span class="hero-subtitle">Find your next opportunity</span>
+        <h1 class="hero-title">
+            Find Your <span>Dream Job</span>
+        </h1>
+        <p class="hero-description">
+            Discover exciting career opportunities and take the next step towards building your future.
+        </p>
+        <div class="hero-actions">
+            <a href="{% url 'all_jobs' %}" class="btn-primary">Browse Jobs</a>
+        </div>
+    </div>
+
+    <div class="hero-card">
+        <div class="hero-card-icon">💼</div>
+        <h3>Start Your Search</h3>
+        <p>Explore thousands of open roles tailored to your skill set.</p>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard | JobsPortal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>Apply for {{ job.title }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Upload Resume</label>
+        <input type="file" name="resume" accept=".pdf,.doc,.docx" required>
+        <button type="submit">Submit Application</button>
+    </form>
+{% endblock %}

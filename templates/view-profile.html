@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}JobsPortal | {{ job.title }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <div class="profile-card">
+
+        <div class="profile-header">
+            <h1>My Profile</h1>
+            <p>Your personal and professional information</p>
+        </div>
+
+        <div class="profile-details">
+
+            <div class="profile-item">
+                <span class="profile-label">Name: </span>
+                <span class="profile-value">{{ p.user.first_name }}</span>
+            </div>
+
+            <div class="profile-item">
+                <span class="profile-label">Headline: </span>
+                <span class="profile-value">{{ p.headline }}</span>
+            </div>
+
+            <div class="profile-item">
+                <span class="profile-label">Place: </span>
+                <span class="profile-value">{{ p.place }}</span>
+            </div>
+
+            <div class="profile-item">
+                <span class="profile-label">Email: </span>
+                <span class="profile-value">{{ p.user.email }}</span>
+            </div>
+
+            <div class="profile-item">
+                <span class="profile-label">Contact Number: </span>
+                <span class="profile-value">{{ p.phone }}</span>
+            </div>
+
+            <div class="profile-item">
+                <span class="profile-label">Highest Qualification: </span>
+                <span class="profile-value">{{ p.qualification }}</span>
+            </div>
+
+        </div>
+
+        <div class="profile-actions">
+            <a href="{% url 'edit_profile' %}" class="edit-profile-btn">
+                Edit Profile
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

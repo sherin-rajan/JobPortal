@@ -1,0 +1,418 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Panel | JobsPortal</title>
+
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+</head>
+
+<body>
+
+    <!-- ================= TOP NAVBAR ================= -->
+
+    <header class="top-navbar">
+
+        <div class="portal-logo">
+            <a href="{% url 'home' %}">
+                Jobs<span>Portal</span>
+            </a>
+        </div>
+
+        <div class="admin-panel-title">
+            <span>Admin Panel</span>
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN LAYOUT ================= -->
+
+    <div class="admin-layout">
+
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-header">
+                <div class="admin-avatar">
+                    {{ user.username|first|upper }}
+                </div>
+
+                <div class="admin-info">
+                    <strong>{{ user.username }}</strong>
+                    <small>Administrator</small>
+                </div>
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <!-- Dashboard -->
+                <a href="{% url 'admin_dashboard' %}" class="nav-item active">
+                    <span class="nav-icon">⌂</span>
+                    <span>Dashboard</span>
+                </a>
+
+
+                <!-- Jobs -->
+                <a href="{% url 'admin_jobs' %}" class="nav-item">
+                    <span class="nav-icon">▣</span>
+                    <span>Jobs</span>
+                </a>
+
+
+                <!-- Applications -->
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">▤</span>
+                    <span>Applications</span>
+                </a>
+
+
+                <!-- Users -->
+                <a href="{% url 'view_users' %}" class="nav-item">
+                    <span class="nav-icon">♙</span>
+                    <span>Users</span>
+                </a>
+
+
+                <!-- Settings -->
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">⚙</span>
+                    <span>Settings</span>
+                </a>
+
+            </nav>
+
+
+            <!-- Sidebar Bottom -->
+
+            <div class="sidebar-bottom">
+
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">←</span>
+                    <span>Back to Portal</span>
+                </a>
+
+                <a href="{% url 'logout' %}" class="nav-item logout-item">
+                    <span class="nav-icon">↪</span>
+                    <span>Logout</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <main class="main-content">
+
+
+            <!-- Page Header -->
+
+            <div class="page-header">
+
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>
+                        Welcome back, {{ user.username }}.
+                        Here's an overview of your JobsPortal.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- ================= STATISTICS ================= -->
+
+            <section class="stats-grid">
+
+
+                <!-- Total Users -->
+
+                <a href="{% url 'view_users' %}" class="stat-card">
+
+                    <div class="stat-icon users-icon">
+                        ♙
+                    </div>
+
+                    <div class="stat-info">
+                        <p>Total Users</p>
+                        <h2>{{ data.total_users }}</h2>
+                        <span>Registered users</span>
+                    </div>
+
+                </a>
+
+
+                <!-- Total Jobs -->
+
+                <a href="{% url 'admin_jobs' %}" class="stat-card">
+
+                    <div class="stat-icon jobs-icon">
+                        ▣
+                    </div>
+
+                    <div class="stat-info">
+                        <p>Total Jobs</p>
+                        <h2>{{ data.total_jobs }}</h2>
+                        <span>Job posts</span>
+                    </div>
+
+                </a>
+
+
+                <!-- Applications -->
+
+                <a href="#" class="stat-card">
+
+                    <div class="stat-icon applications-icon">
+                        ▤
+                    </div>
+
+                    <div class="stat-info">
+                        <p>Total Applications</p>
+                        <h2>{{ data.total_applications }}</h2>
+                        <span>Applications received</span>
+                    </div>
+
+                </a>
+
+
+                <!-- Active Jobs -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon active-icon">
+                        ●
+                    </div>
+
+                    <div class="stat-info">
+                        <p>Portal Status</p>
+                        <h2>Active</h2>
+                        <span>System running</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= QUICK ACTIONS ================= -->
+
+            <section class="content-section">
+
+                <div class="section-header">
+                    <div>
+                        <h2>Quick Actions</h2>
+                        <p>Frequently used admin actions</p>
+                    </div>
+                </div>
+
+
+                <div class="quick-actions">
+
+                    <a href="{% url 'add_jobs' %}" class="action-card">
+
+                        <div class="action-icon">
+                            +
+                        </div>
+
+                        <div>
+                            <h3>Add New Job</h3>
+                            <p>Create a new job posting</p>
+                        </div>
+
+                    </a>
+
+
+                    <a href="{% url 'admin_jobs' %}" class="action-card">
+
+                        <div class="action-icon">
+                            ▣
+                        </div>
+
+                        <div>
+                            <h3>Manage Jobs</h3>
+                            <p>View and manage job posts</p>
+                        </div>
+
+                    </a>
+
+
+                    <a href="{% url 'admin_applications' %}" class="action-card">
+
+                        <div class="action-icon">
+                            ▤
+                        </div>
+
+                        <div>
+                            <h3>Applications</h3>
+                            <p>Review applicant details</p>
+                        </div>
+
+                    </a>
+
+
+                    <a href="{% url 'view_users' %}" class="action-card">
+
+                        <div class="action-icon">
+                            ♙
+                        </div>
+
+                        <div>
+                            <h3>Manage Users</h3>
+                            <p>View registered users</p>
+                        </div>
+
+                    </a>
+
+                    <a href="{% url 'sector_list' %}" class="action-card">
+
+                        <div class="action-icon">
+                                        ◈
+                        </div>
+
+                        <div>
+                            <h3>Manage Sectors</h3>
+                            <p>View and manage job sectors</p>
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= RECENT APPLICATIONS ================= -->
+
+            <section class="content-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Recent Applications</h2>
+                        <p>Latest applications received</p>
+                    </div>
+
+                    <a href="#" class="view-all">
+                        View All →
+                    </a>
+
+                </div>
+
+
+                <div class="applications-table-wrapper">
+
+                    <table class="applications-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Applicant</th>
+                                <th>Job</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for d in applications %}
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="applicant">
+
+                                        <div class="applicant-avatar">
+                                            {{ d.user.first_name|first|upper }}
+                                        </div>
+
+                                        <div>
+                                            <strong>
+                                                {{ d.user.first_name }}
+                                                {{ d.user.last_name }}
+                                            </strong>
+
+                                            <small>
+                                                {{ d.user.username }}
+                                            </small>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <strong>{{ d.job.title }}</strong>
+                                </td>
+
+
+                                <td>
+                                    {{ d.created_at|date:"d M Y" }}
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="{% url 'application_details' d.id %}"
+                                        class="details-btn">
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                            {% empty %}
+
+                            <tr>
+
+                                <td colspan="4" class="empty-state">
+                                    No applications found.
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= FOOTER ================= -->
+
+            <footer class="admin-footer">
+
+                <p>
+                    © 2026 JobsPortal Admin Panel
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

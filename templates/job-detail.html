@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}JobsPortal | {{ job.title }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="job-detail-container">
+    {% if not request.user.is_superuser %}
+    <div class="job-detail-header-actions">
+        <a href="{% url 'all_jobs' %}" class="btn-back">← Back to All Jobs</a>
+    </div>
+    {% else %}
+   <div class="job-detail-header-actions">
+        <a href="{% url 'admin_dashboard' %}" class="btn-back">← Back to Dashboard</a>
+    </div>
+    {% endif %}
+
+    <article class="job-detail-card">
+        <!-- Main Job Header -->
+        <header class="job-detail-header">
+            <div class="job-header-info">
+                <h1 class="job-detail-title">{{ job.title }}</h1>
+                <div class="job-detail-meta">
+                    <span class="meta-badge location-badge">
+                        📍 {{ job.location }}
+                    </span>
+                    {% if job.post_date %}
+                    <span class="meta-badge date-badge">
+                        📅 Posted {{ job.post_date|date:"M d, Y" }}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+        <hr class="divider">
+
+        <!-- Job Description Body -->
+        <section class="job-detail-body">
+            <h3>Key Responsibilities & Description</h3>
+            <div class="job-description">
+                <p>{{ job.description|linebreaks }}</p>
+            </div>
+        </section>
+
+        <!-- Apply CTA Section -->
+         {% if not request.user.is_superuser %}
+        <footer class="job-detail-footer">
+            {% if has_applied %}
+            <h3 style="color: blue;">Applied</h3>
+            {% else %}
+            <a href="{% url 'apply_job' job.id %}" class="btn-primary btn-apply">Apply Now</a>
+            {% endif %}
+        </footer>
+        {% endif %}
+
+
+    </article>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard | JobsPortal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="edit-profile-page">
+
+    <div class="edit-profile-card">
+
+        <div class="edit-profile-header">
+            <h1>Edit Profile</h1>
+            <p>Update your personal and professional information.</p>
+        </div>
+
+        <form method="post" action="" class="profile-form">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="profile-form-actions">
+
+                <a href="{% url 'user_dashboard' %}" class="cancel-profile-btn">
+                    Cancel
+                </a>
+
+                <button type="submit" class="save-profile-btn">
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard | JobsPortal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-container">
+
+    <!-- Dashboard Welcome Header -->
+    <div class="dashboard-top">
+
+        <div>
+
+            <h1>
+                Welcome back,
+                {{ user.first_name|default:user.username }} 👋
+            </h1>
+
+            <p class="dashboard-subtitle">
+                Manage your profile, track applications and discover your next opportunity.
+            </p>
+        </div>
+
+        <a href="{% url 'all_jobs' %}" class="dashboard-explore-btn">
+            + Explore Jobs
+        </a>
+
+    </div>
+
+
+    <!-- Main Dashboard Layout -->
+    <div class="dashboard-layout">
+
+        <!-- LEFT PROFILE CARD -->
+        <aside class="profile-sidebar">
+
+            <div class="profile-card">
+
+                <div class="profile-avatar">
+                    {{ user.first_name|first|upper }}
+                </div>
+
+                <h2>
+                    {{ p.user.first_name|default:p.user.username }}
+                </h2>
+
+                <p class="profile-headline">
+                    {{ p.headline|default:"Add your professional headline" }}
+                </p>
+
+                <div class="profile-location">
+                    📍 {{ p.place|default:"Location not added" }}
+                </div>
+
+                <div class="profile-divider"></div>
+
+                <div class="profile-completion">
+                    <div class="completion-header">
+                        <span>Profile</span>
+                        <span>Complete</span>
+                    </div>
+
+                    <div class="completion-bar">
+                        <div class="completion-progress"></div>
+                    </div>
+                </div>
+
+                <a href="{% url 'view_profile' %}" class="view-profile-btn">
+                    View Profile
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- CENTER CONTENT -->
+        <div class="dashboard-main">
+
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+
+                <div class="state-card">
+                    <div class="stat-icon blue">📁</div>
+
+                    <div class="state-info">
+                        <h3>{{ applied_jobs|length }}</h3>
+                        <p>Applied Jobs</p>
+                    </div>
+                </div>
+
+
+                <div class="state-card">
+                    <div class="stat-icon green">⏳</div>
+
+                    <div class="stat-info">
+                        <h3>In Review</h3>
+                        <p>Active Applications</p>
+                    </div>
+                </div>
+
+
+                <div class="state-card">
+                    <div class="stat-icon purple">👤</div>
+
+                    <div class="stat-info">
+                        <h3>Active</h3>
+                        <p>Account Status</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Applications Header -->
+            <div class="section-header">
+
+                <div>
+                    <p class="section-label">APPLICATIONS</p>
+                    <h2>Your Applications</h2>
+                </div>
+
+                <form method="get" class="dashboard-search">
+
+                    <div class="search-input-group">
+
+                        <input
+                            type="text"
+                            name="search"
+                            placeholder="Search applications..."
+                            value="{{ request.GET.search }}"
+                        >
+
+                        <button type="submit" class="btn-search">
+                            🔍
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- Applied Jobs -->
+            {% if applied_jobs %}
+
+                <div class="dashboard-jobs-grid">
+
+                    {% for application in applied_jobs %}
+
+                        <div class="dashboard-job-card">
+
+                            <div class="job-card-header">
+
+                                <div class="company-badge">
+                                    🏢
+                                </div>
+
+                                <span class="status-badge badge-pending">
+                                    Under Review
+                                </span>
+
+                            </div>
+
+                            <h3 class="job-title">
+                                {{ application.job.title }}
+                            </h3>
+
+                            <div class="job-details">
+
+                                <p class="job-detail-item">
+                                    <span>📍</span>
+                                    {{ application.job.location|default:"Remote / Flexible" }}
+                                </p>
+
+                                <p class="job-detail-item">
+                                    <span>📅</span>
+                                    Applied on {{ application.date|date:"M d, Y" }}
+                                </p>
+
+                            </div>
+
+                            <div class="job-card-footer">
+
+                                <a href="{% url 'job_detail' application.job.id %}"
+                                   class="btn-outline">
+                                    View Details
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-state-card">
+
+                    <div class="empty-icon">
+                        📥
+                    </div>
+
+                    <h3>No Applications Yet</h3>
+
+                    <p>
+                        You haven't applied for any jobs yet.
+                        Explore available opportunities and find your next role.
+                    </p>
+
+                    <a href="{% url 'all_jobs' %}" class="btn-primary">
+                        Browse Jobs
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+            </div>
+
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="dashboard-sidebar">
+
+            <div class="sidebar-card">
+
+                <h3>Quick Actions</h3>
+
+                <a href="{% url 'all_jobs' %}" class="quick-action">
+                    <span class="action-icon">🔎</span>
+
+                    <div>
+                        <strong>Find Jobs</strong>
+                        <small>Explore opportunities</small>
+                    </div>
+
+                    <span class="action-arrow">→</span>
+                </a>
+
+
+                <a href="{% url 'view_profile' %}" class="quick-action">
+                    <span class="action-icon">👤</span>
+
+                    <div>
+                        <strong>My Profile</strong>
+                        <small>View your profile</small>
+                    </div>
+
+                    <span class="action-arrow">→</span>
+                </a>
+
+
+                <a href="{% url 'edit_profile' %}" class="quick-action">
+                    <span class="action-icon">✏️</span>
+
+                    <div>
+                        <strong>Edit Profile</strong>
+                        <small>Update your information</small>
+                    </div>
+
+                    <span class="action-arrow">→</span>
+                </a>
+
+            </div>
+
+
+            <div class="sidebar-card career-card">
+
+                <div class="career-icon">
+                    💼
+                </div>
+
+                <h3>Keep your profile updated</h3>
+
+                <p>
+                    A complete profile helps recruiters understand your skills
+                    and experience.
+                </p>
+
+                <a href="{% url 'edit_profile' %}">
+                    Update Profile →
+                </a>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+{% endblock %}

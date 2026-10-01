@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}JobsPortal | Users{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="users-page">
+
+    <div class="users-header">
+        <h2>Registered Users</h2>
+        <p>View all users registered on JobsPortal.</p>
+    </div>
+
+
+    <div class="users-card">
+
+        {% for user in users %}
+
+        <div class="user-item">
+
+            <div class="user-info">
+
+                <h3>
+                    {{ user.first_name }} {{ user.last_name }}
+                </h3>
+
+                <p>{{ user.email }}</p>
+
+                <span>@{{ user.username }}</span>
+
+            </div>
+
+            <div>
+                <a href="#" class="user-details-btn">
+                    Details
+                </a>
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p class="empty-users">
+            No users found.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+
+    <a href="{% url 'admin_dashboard' %}" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+{% endblock %}

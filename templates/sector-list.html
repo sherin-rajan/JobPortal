@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sectors</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .add-btn {
+            display: inline-block;
+            background: #198754;
+            color: white;
+            padding: 10px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .sector {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .sector-name {
+            font-size: 18px;
+        }
+
+        .actions a {
+            padding: 7px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+
+        .edit {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .delete {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>All Sectors</h1>
+
+    <a href="{% url 'sector_create' %}" class="add-btn">
+        Add Sector
+    </a>
+
+    {% for sector in sectors %}
+
+        <div class="sector">
+
+            <span class="sector-name">
+                {{ sector.name }}
+            </span>
+
+            <div class="actions">
+
+                <a href="{% url 'sector_update' %}"
+                   class="edit">
+                    Edit
+                </a>
+
+                <a href="{% url 'sector_delete' sector.id %}"
+                   class="delete">
+                    Delete
+                </a>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <p>No sectors available.</p>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}JobsPortal | Applicant Details{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="applicant-page">
+
+    <div class="applicant-header">
+        <h2>Applicant Details</h2>
+        <p>View the applicant's information and application details.</p>
+    </div>
+
+
+    <div class="applicant-card">
+
+        <div class="applicant-section">
+            <h3>Applicant Information</h3>
+
+            <div class="detail-row">
+                <span>Name</span>
+                <strong>
+                    {{ application.user.first_name }}
+                    {{ application.user.last_name }}
+                </strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Username</span>
+                <strong>{{ application.user.username }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Email</span>
+                <strong>{{ application.user.email }}</strong>
+            </div>
+        </div>
+
+
+        <div class="applicant-section">
+            <h3>Job Information</h3>
+
+            <div class="detail-row">
+                <span>Job Title</span>
+                <strong>{{ application.job.title }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Company</span>
+                <strong>{{ application.job.company }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Location</span>
+                <strong>{{ application.job.place }}</strong>
+            </div>
+        </div>
+
+
+        <div class="applicant-section">
+            <h3>Resume</h3>
+
+            {% if application.resume %}
+                <a href="{{ application.resume.url }}"
+                   target="_blank"
+                   class="resume-btn">
+                    View Resume
+                </a>
+
+                <a href="{{ application.resume.url }}"
+                   download
+                   class="download-btn">
+                    Download Resume
+                </a>
+            {% else %}
+                <p class="no-resume">
+                    No resume uploaded.
+                </p>
+            {% endif %}
+        </div>
+
+
+        <div class="applicant-actions">
+
+            <a href="{% url 'admin_dashboard' %}" class="back-btn">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

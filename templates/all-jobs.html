@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}JobsPortal | All Jobs{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="jobs-page-layout">
+    <!-- Sidebar / Sector Filter -->
+    <aside class="sidebar-filter">
+        <div class="filter-card">
+            <h3>Filter by Sector</h3>
+            <ul class="sector-list">
+                <li>
+                    <a href="{% url 'all_jobs' %}" class="sector-link">All Categories</a>
+                </li>
+                {% for sector in sectors %}
+                <li>
+                    <a href="{% url 'jobs_by_category' sector.id %}" class="sector-link">
+                        {{ sector.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="jobs-main-content">
+        <div class="jobs-header">
+            <h1>Available Jobs</h1>
+            <p>Find your next career opportunity and apply directly.</p>
+        </div>
+
+        {% if messages %}
+        <div class="messages-container">
+            {% for msg in messages %}
+            <div class="alert alert-info">
+                {{ msg }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <section class="jobs-section">
+            {% if jobs %}
+            <div class="jobs-grid">
+                {% for job in jobs %}
+                <div class="job-card">
+                    <div class="job-card-header">
+                        <span class="job-badge">Full-time</span>
+                    </div>
+                    
+                    <h3 class="job-title">{{ job.title }}</h3>
+                    
+                    <div class="job-meta">
+                        <div class="meta-item">
+                            <span class="meta-icon">📍</span>
+                            <span class="meta-label">Location:</span>
+                            <span class="meta-value">{{ job.location }}</span>
+                        </div>
+
+                        <div class="meta-item">
+                            <span class="meta-icon">📅</span>
+                            <span class="meta-label">Posted:</span>
+                            <span class="meta-value">{{ job.post_date|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+
+                    <div class="job-card-footer">
+                        <a href="{% url 'job_detail' job.id %}" class="btn-primary btn-block">View Details</a>
+                    </div>
+                    {% if job.has_applied %}
+                    <span class="applied-status">
+                        ✓ Applied
+                     </span>
+                     {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state-card">
+                <div class="empty-icon">🔍</div>
+                <h3>No Jobs Found</h3>
+                <p>Sorry, there are currently no jobs available in this category.</p>
+                <a href="{% url 'all_jobs' %}" class="btn-primary">View All Jobs</a>
+            </div>
+            {% endif %}
+        </section>
+    </main>
+</div>
+{% endblock %}
