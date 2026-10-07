@@ -190,6 +190,12 @@ def viewUsers(request):
     return render(request, "view-users.html", {"users": users})
 
 @admin_permission
+def userDetails(request, user_id):
+    user = get_object_or_404(User.objects.filter(is_superuser=False), id=user_id)
+    profile = Profile.objects.filter(user=user).first()
+    return render(request, "user-details.html", {"user": user, "profile": profile})
+
+@admin_permission
 def adminJob(request):
     jobs = Jobs.objects.select_related("sector","company")
     search = request.GET.get("search")
@@ -249,4 +255,3 @@ class SectorDeleteView(DeleteView):
     success_url = reverse_lazy('sector_list')
     pk_url_kwarg="sector_id"
     
-

@@ -18,6 +18,7 @@ urlpatterns=[
     path("admin-applications/",views.adminApplications,name="admin_applications"),
     path("application-details/<int:application_id>/",views.applicationDetails, name='application_details'),
     path("users/",views.viewUsers,name="view_users"),
+    path("users/<int:user_id>/",views.userDetails,name="user_details"),
     path("admin-jobs",views.adminJob,name="admin_jobs"),
     path("notifications/",views.notifications,name="notifications"),
     path("notification-read/<int:notification_id>/",views.mark_notification_read,name="mark_notification_read"),

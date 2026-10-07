@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}JobsPortal | User Details{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="applicant-page">
+
+    <div class="applicant-header">
+        <h2>User Profile</h2>
+        <p>Read-only account and profile information.</p>
+    </div>
+
+    <div class="applicant-card">
+        <div class="applicant-section">
+            <h3>Account Information</h3>
+
+            <div class="detail-row">
+                <span>Name</span>
+                <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Username</span>
+                <strong>{{ user.username }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Email</span>
+                <strong>{{ user.email|default:"Not provided" }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Joined</span>
+                <strong>{{ user.date_joined|date:"F j, Y" }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Account status</span>
+                <strong>{% if user.is_active %}Active{% else %}Inactive{% endif %}</strong>
+            </div>
+        </div>
+
+        <div class="applicant-section">
+            <h3>Profile Information</h3>
+
+            <div class="detail-row">
+                <span>Headline</span>
+                <strong>{{ profile.headline|default:"Not provided" }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Date of birth</span>
+                <strong>{{ profile.dob|date:"F j, Y"|default:"Not provided" }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Place</span>
+                <strong>{{ profile.place|default:"Not provided" }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Contact number</span>
+                <strong>{{ profile.phone|default:"Not provided" }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Highest qualification</span>
+                <strong>{{ profile.qualification|default:"Not provided" }}</strong>
+            </div>
+        </div>
+
+        <div class="applicant-actions">
+            <a href="{% url 'view_users' %}" class="back-btn">
+                ← Back to Users
+            </a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
